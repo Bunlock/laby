@@ -1,0 +1,63 @@
+<html>
+	<head>
+		<title>
+			Jeu de labyrinthe
+		</title>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" href="css/style.css"/>
+	</head>
+	<body>
+		<header>
+			<nav>
+				<!-- 
+				1) Accueil / Principe du jeu
+				2) Lancer une nouvelle partie
+				3) Rejoindre une partie en cours
+				4) Accéder aux scores
+
+				-->
+				<a href="home.html">Principe du jeu</a>
+				<a href="laby.html">Nouvelle partie</a>
+				<a href="laby.html">Rejoindre partie</a>
+				<a href="scores.html">Scores</a>
+			</nav>
+		</header>
+		<div class="content">
+			<h1>Bienvenue dans le Labyrinthe !</h1>
+			<h2>Trouvez votre chemin :</h2>
+			<div>
+				<table id="maze">
+					<tr>
+						<td class="maze_cell mc_bW mc_bN">&nbsp;</td>
+						<td class="maze_cell mc_bN mc_bS">&nbsp;</td>
+						<td class="maze_cell mc_bN mc_bS">&nbsp;</td>
+						<td class="maze_cell mc_bN mc_bE">&nbsp;</td>
+					</tr>
+					<tr>
+						<td class="maze_cell mc_bW mc_bE">&nbsp;</td>
+						<td class="maze_cell mc_bW mc_bN mc_bS">&nbsp;</td>
+						<td class="maze_cell mc_bN">&nbsp;</td>
+						<td class="maze_cell mc_bE">&nbsp;</td>
+					</tr>
+					<tr>
+						<td class="maze_cell mc_bW">&nbsp;</td>
+						<td class="maze_cell mc_bN mc_bE">&nbsp;</td>
+						<td class="maze_cell mc_bW mc_bS mc_bE">&nbsp;</td>
+						<td class="maze_cell mc_bW mc_bE">&nbsp;</td>
+					</tr>
+					<tr>
+						<td class="maze_cell mc_bS mc_bW mc_bE">&nbsp;</td>
+						<td class="maze_cell mc_bS mc_bW">&nbsp;</td>
+						<td class="maze_cell mc_bS mc_bN">&nbsp;</td>
+						<td class="maze_cell mc_bS mc_bE">&nbsp;</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<footer>
+			<hr/>
+			Créé avec passion pour ESILV 2A ACS
+		</footer>
+	</body>
+
+</html>

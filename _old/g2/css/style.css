@@ -1,0 +1,80 @@
+body{
+	font-family: Verdana;
+}
+
+nav{
+	margin-top: 20px;
+	font-size: 1.4em;
+} 
+nav a{
+	margin-left: 10px;
+	margin-right: 10px;
+	text-decoration: none;
+	color: white;
+	background-color: green;
+	padding: 10px;
+	border-radius: 10px;	
+}
+nav a:hover{
+	background-color: lime;
+}
+#home, #home:visited{
+	background-color: orange;
+}
+#home:hover{
+	background-color: yellow;
+}
+p{
+	
+}
+.content{
+	max-width: 960px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.content div{
+	max-width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#scores{
+	width:700px;
+}
+#scores td, th{
+	border: 3px solid #777;
+	line-height: 30px;
+	padding-left: 10px;
+}
+header{
+	margin-bottom: 60px;
+}
+footer{
+	margin-top: 60px;
+	text-align:center;
+	font-size: 1.2em;
+}
+.score-td{
+	text-align:right;
+	padding-right: 10px;
+}
+#maze{
+	border: 1px solid #ccc;
+}
+#maze td{
+	width: 18px;
+	height: 20px;
+	/*border: 1px solid #ccc;*/
+}
+
+.bN{
+	border-top: 2px solid #777;
+}
+.bE{
+	border-right: 2px solid #777;
+}
+.bS{
+	border-bottom: 2px solid #777;
+}
+.bW{
+	border-left: 2px solid #777;
+}
