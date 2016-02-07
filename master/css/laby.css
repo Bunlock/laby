@@ -14,12 +14,18 @@ form{display:inline;}
 div.cell {
     display:inline-block;
     text-align: center;
+    vertical-align: center;
+    font-size:0.8em;
+
     /*
     border-width: 0.05px;
     border-size: 1px;
     margin: 25px;*/
     /*padding: 2px;*/
     border: 2px dotted #eee;
+
+    width:  50px;
+    height: 50px;
 }
 
 div.N { border-top: 2px solid; }
@@ -27,7 +33,7 @@ div.E { border-right: 2px solid; }
 div.S { border-bottom: 2px solid; }
 div.W { border-left: 2px solid; }
 
-.small {
+/*.small {
     width:  30px;
     height: 30px;
 }
@@ -38,7 +44,7 @@ div.W { border-left: 2px solid; }
 .large {
     width:  50px;
     height: 50px;
-}
+}*/
 /*#menu {
     position: fixed;
     right: 0;

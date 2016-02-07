@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/laby.css">
 </head>
-<body>
+<body onload="pick_generated();">
 <header>
     <nav class="content">
         <!--
@@ -25,34 +25,7 @@
     <h1>Bienvenue dans le labyrinthe</h1>
     <h2>Saurez vous relever le défi ? ;)</h2>
     <hr/>
-    <div>
-        <table id="maze">
-            <tr>
-                <td class="bN bW">&nbsp;</td>
-                <td class="bN bE bS">&nbsp;</td>
-                <td class="bN bW">&nbsp;</td>
-                <td class="bN bS bE">&nbsp;</td>
-            </tr>
-            <tr>
-                <td class="bW bE">&nbsp;</td>
-                <td class="bN bW bS">&nbsp;</td>
-                <td class="bE">&nbsp;</td>
-                <td class="bW bE bN">&nbsp;</td>
-            </tr>
-            <tr>
-                <td class="bW bS">&nbsp;</td>
-                <td class="bN bE">&nbsp;</td>
-                <td class="bE bW">&nbsp;</td>
-                <td class="bW bE">&nbsp;</td>
-            </tr>
-            <tr>
-                <td class="bN bS bW">&nbsp;</td>
-                <td class="bS">&nbsp;</td>
-                <td class="bS">&nbsp;</td>
-                <td class="bS bE">&nbsp;</td>
-            </tr>
-        </table>
-    </div>
+    <div id="display"></div>
 </div>
 <footer class="content">
     <hr/>

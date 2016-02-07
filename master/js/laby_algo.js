@@ -100,7 +100,6 @@ function dig(laby, i, j) {
 }
 
 // creuse une entrée et une sortie
-function dig_ES(laby) {
-    laby[Math.floor(Math.random() * a.length)][0] -= 8;
-    laby[Math.floor(Math.random() * a.length)][a[0].length - 1] -= 2;
+function dig_ES(a) {
+    return [a[Math.floor(Math.random() * a.length)][0] -= 8, a[Math.floor(Math.random() * a.length)][a[0].length - 1] -= 2];
 }

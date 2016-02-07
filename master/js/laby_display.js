@@ -4,58 +4,65 @@ function print_maze(a, cell_sz) {
     var container = document.createElement('div');
     container.setAttribute('id','laby');
     container.setAttribute('class','maze');
-    container.setAttribute('style',
-        'width:'+parseInt(cell_sz * (parseInt(document.querySelector('#dimX').value) )+cell_sz*4) +
-        'px; height:'+parseInt(cell_sz * (parseInt(document.querySelector('#dimY').value) )+cell_sz*4)+'px;'
-    );
-
-    var cells=[];
+    var width, height;
+    if (document.querySelector('#dimX')) {
+        width = parseInt(cell_sz * (parseInt(document.querySelector('#dimX').value) )+cell_sz*4);
+        height = parseInt(cell_sz * (parseInt(document.querySelector('#dimY').value) )+cell_sz*4);
+    }
+    else {
+        width = cell_sz * 14;
+        height = cell_sz * 14;
+    }
+    container.setAttribute('style','width:'+width+'px; height:'+height+'px;');
     for (var i = 0; i < a.length; i++) {
         var row = document.createElement('div');
         row.setAttribute('class','row');
         for (var j = 0; j < a[i].length; j++) {
             var cell = document.createElement('div');
             cell.setAttribute('id',i+'_'+j);
-            cell.setAttribute('class','cell '+css_cell_code(a[i][j])+ ' '+document.querySelector('#cell_sz').options[document.querySelector('#cell_sz').selectedIndex].text);
+            cell.setAttribute('class','cell '+css_cell_code(a[i][j]));//+ ' '+document.querySelector('#cell_sz').options[document.querySelector('#cell_sz').selectedIndex].text);
             //cell.setAttribute('style', 'width:'+ 0.8 * cell_sz+'px; height:' + 0.8 * cell_sz + 'px;');
             //flow += " style='top:" + (cell_sz * i) + "; left:" + (cell_sz * j) + ";";
             //cell.innerHTML = a[i][j]; // i +'_'+ j +' <b>'+ a[i][j] + '</b>';
             cell.innerHTML='&nbsp';
-            cells[cells.length]=cell;
             row.appendChild(cell);
         }
         container.appendChild(row);
     }
     document.querySelector('#display').appendChild(container);
-    return cells;
 }
-
-function generate_display(){
-    var a = new_2d_array(
-        parseInt(document.querySelector('#dimX').value),
-        parseInt(document.querySelector('#dimY').value)
-    );
-    var cell_sz = parseInt(document.querySelector('#cell_sz').options[document.querySelector('#cell_sz').selectedIndex].value) || 50;
+function generate_display(x,y){
+    var a;
+    if (document.querySelector('#dimX') && document.querySelector('#dimY')) {
+        a = new_2d_array(
+            parseInt(document.querySelector('#dimX').value),
+            parseInt(document.querySelector('#dimY').value)
+        );
+    } else a = new_2d_array(x,y);
+    var cell_sz = 50;//parseInt(document.querySelector('#cell_sz').options[document.querySelector('#cell_sz').selectedIndex].value) || 50;
     init_2d_array(a, 15);
     //random_init_maze(a);
     dig(a, 0, 0);
-    //dig_ES(a);
-
+    dig_ES(a);
     print_maze(a, cell_sz);
+    localStorage.maze = JSON.stringify(a);
     return a;
 }
 
 function main(){
-    document.querySelector('#bt-gen').addEventListener('click',function(){
-        document.querySelector('#display').innerHTML = '';
-        var a = generate_display();
-        // premier pas en DOM : marquage de l'entrée et de la sortie :
-        for (var i = 0; i < a.length && has_W_wall(a[i][0]); i++);
-        console.log(document.querySelector('#'+i + "_0"));
-        //.style.backgroundColor = "#99ff33";
-        for (var i = 0; i < a.length && has_E_wall(a[i][a[0].length - 1]); i++);
-        document.querySelector('#'+i + "_" + (a[0].length - 1)).style.backgroundColor = "#ff6666";
-    });
+    pick_generated();
+    if (document.querySelector('#bt-gen')){
+            document.querySelector('#bt-gen').addEventListener('click',function(){
+               document.querySelector('#display').innerHTML = '';
+               generate_display();
+            });
+    }
+
 }
 
-main();
+function pick_generated(){
+    var a;
+    if (!localStorage.maze) a = new_2d_array(10,10);
+    else {a = JSON.parse(localStorage.maze);}
+    print_maze(a, 50);
+}
