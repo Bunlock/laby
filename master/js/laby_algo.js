@@ -1,26 +1,55 @@
 
+// Modèle de données : chaque cellule est entourée de 0, 1, 2, 3 ou 4 murs.
+// On code la présence de chaque mur par un chiffre binaire distinct :
+// 1 pour le mur N, 10 (2) pour le mur E, 100 (4) pour le mur S, 1000 (8) pour le mur W.
+// La valeur de chaque cellule est codée par simple somme de ces valeurs selon les murs présents ou pas.
 
-/*
- 0) Quid du labyrinthe parfait
- 1) Modèle de données : les deux alternatives
- 2) Algo de génération 1 : creusement de galeries
- 3) Algo de génération 2 : fusion de zones
- */
 
 // retourne un tableau de n lignes par m colonnes
 function new_2d_array(n, m) {
     if (!(n && m)) return;
     var a = new Array(n);
-    for (var i = 0; i < a.length; i++) a[i] = new Array(n);
+    for (var i = 0; i < a.length; i++) a[i] = new Array(m);
     return a;
 }
 
-// Modèle de données : chaque cellule est entourée de 0, 1, 2, 3 ou 4 côtés.
-// On code la présence de chaque coté par un chiffre binaire distinct
-// Le masque est le suivant : 1 pour la présence du côté N, 10 (2) pour E, 100 (4) pour S, 1000 (8) pour W
-// La valeur de chaque cellule est codée par simple somme de ces valeurs selon les côtés présents ou pas
-// les tests de présence de côté sont simplifiés : on utilise un masque binaire pour déterminer si tel ou tel
-// côté est présent
+// initialise le tableau a en affectant à toutes ses cellules la valeur v
+function init_2d_array(a, v) {
+    for (var i = 0; i < a.length; i++)
+        for (var j = 0; j < a[i].length; j++)
+            a[i][j] = v;
+}
+
+// initialise le tableau a en affectant à toutes ses cellules la valeur v
+function random_init_maze(a) {
+    for (var i = 0; i < a.length; i++)
+        for (var j = 0; j < a[i].length; j++)
+            a[i][j] = Math.floor(Math.random() * 16);
+}
+
+
+// affiche un tableau 2D
+function print_2d_array(a) {
+    for (var i = 0; i < a.length; i++) {
+        for (var j = 0; j < a[i].length; j++) {
+            document.write(a[i][j] + " ");
+        }
+        document.write("<br/>");
+    }
+}
+
+// fournir un corrigé de ce qui était demandé au TP 1
+function has_N_wall(v) { return (v & 1) == 1; } // retourne vrai ssi le mur N existe
+function has_E_wall(v) { return (v & 2) == 2; }
+function has_S_wall(v) { return (v & 4) == 4; }
+function has_W_wall(v) { return (v & 8) == 8; }
+
+function css_cell_code(v) {
+    return (has_N_wall(v) ? "N " : "")
+        + (has_E_wall(v) ? "E " : "")
+        + (has_S_wall(v) ? "S " : "")
+        + (has_W_wall(v) ? "W " : "");
+}
 
 // creusement de galeries
 // toutes les cellules sont fermées (4 murs => valeur 15)
@@ -32,23 +61,16 @@ function new_2d_array(n, m) {
 // etc.. déjà fait - retrouver.
 // si toutes les possibilités sont fermées, on revient en arrière (backtracking) jusqu'à la dernière position
 // d'où pertaient plusieurs choix
-// => A concevoir sur papier + réaliser et tester
+// => A concevoir sur papier + réaliser et teste
 // finalement : on se donne un point d'entrée et un point de sortie en désignant deux côtés
 //
 
 
-// Etudiants => ecrire mail. + support transitionnel => corrigé (pas aux deux autres, pour qu'ils aient l'air con) sur le travail préparatoire à effectuer (tuto JS de la W3schools) + étudier les algos de laby + ce en quoi va consister le prochain TP + fournir un corrigé de ce qui était demandé au TP 1
-function has_N_wall(laby, i, j) { return laby[i][j] & 1 == 1; } // retourne vrai ssi le mur N existe
-function has_E_wall(laby, i, j) { return laby[i][j] & 2 == 2; }
-function has_W_wall(laby, i, j) { return laby[i][j] & 4 == 4; }
-function has_S_wall(laby, i, j) { return laby[i][j] & 8 == 8; }
-
 // une cellule a été explorée ssi elle n'a plus ses 4 murs (i.e. son code diffère de 15)
-
 // donne la liste des cellules adjacentes à la cellule i, j qui n'ont pas encore été visitées
 function explorable(laby, i, j) {
-    var k = 0;
     var a = []; // création d'un tableau vide
+    var k = 0;
     if (i > 0)                  if (laby[i - 1][j] == 15) a[k++] = 1;
     if (j < laby[0].length - 1) if (laby[i][j + 1] == 15) a[k++] = 2;
     if (i < laby.length - 1)    if (laby[i + 1][j] == 15) a[k++] = 4;
@@ -58,29 +80,27 @@ function explorable(laby, i, j) {
 
 // tirage aléatoire d'une direction parmi les 1, 2, 3 ou 4 fournies
 function dig(laby, i, j) {
+    //console.log("dig(" + i + ", " + j + ")");
     var a = explorable(laby, i, j); // on récupère celles des 4 cellules adjacentes qui n'ont pas encore été explorées
-    if (a.length > 0) { // s'il en existe au moins une, on effectue un tirage aléatoire pour choisir l'une d'entre elles
-        var dir = Math.floor(Math.random() * a.length);
-        // on fait tomber la cloison qui sépare la cellule courante de la cellule adjacente choisie
-        laby[i][j] -= a[dir];
-        // et on relance récursivement l'algorithme sur la cellule adjacente sélectionnée
-        switch (a[dir]) {
-            case 1 : return dig(laby, i - 1, j);
-            case 2 : return dig(laby, i, j + 1);
-            case 4 : return dig(laby, i + 1, j);
-            case 8 : return dig(laby, i, j - 1);
-        }
+    // s'il n'en existe aucune, on ne poursuit pas et on retourne 0 (aucun mur na été creusé)
+    if (a.length == 0) return 0;
+    // s'il en existe au moins une, on effectue un tirage aléatoire pour choisir l'une d'entre elles
+    var dir = Math.floor(Math.random() * a.length);
+    // on fait tomber la cloison qui sépare la cellule courante de la cellule adjacente choisie
+    laby[i][j] -= a[dir];
+    // et on relance récursivement l'algorithme sur la cellule adjacente sélectionnée
+    switch (a[dir]) {
+        case 1 : laby[i - 1][j] -= 4; dig(laby, i - 1, j); break;
+        case 2 : laby[i][j + 1] -= 8; dig(laby, i, j + 1); break;
+        case 4 : laby[i + 1][j] -= 1; dig(laby, i + 1, j); break;
+        case 8 : laby[i][j - 1] -= 2; dig(laby, i, j - 1); break;
     }
-    // compléter demain en partant d'un dessin : bien gérer le backtracking
+    // l'algorithme se relance sur la cellule courante (backtracking) au cas où il lui resterait des voisines à explorer
+    dig(laby, i, j);
 }
 
-function generate(a) {
-    return dig(laby, 0, 0);
+// creuse une entrée et une sortie
+function dig_ES(laby) {
+    laby[Math.floor(Math.random() * a.length)][0] -= 8;
+    laby[Math.floor(Math.random() * a.length)][a[0].length - 1] -= 2;
 }
-/*var laby = new_2d_array(5, 10);
-console.log(laby);
-laby = 	generate(laby);
-console.log(laby);
-print_2d_array(
-    laby
-);*/

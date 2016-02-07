@@ -3,6 +3,7 @@
     <title>Labyrinthe - Back Office</title>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/laby.css">
 </head>
 <body>
 <header>
@@ -26,8 +27,14 @@
     <div>
 
         <form>
-            <label for="dimX">Dimensions X</label><input type="number" class="dim" name="dimX" id="dimX" value="5"/><br/>
-            <label for="dimY">Dimensions Y</label><input type="number" class="dim" name="dimY" id="dimY" value="10"/><br/>
+            <label for="dimX">Dimensions X</label><input type="number" class="dim" name="dimX" id="dimX" value="10"/>
+            <label for="dimY">Dimensions Y</label><input type="number" class="dim" name="dimY" id="dimY" value="10"/>
+            <label for="cell_sz">Taille des cellules</label>
+            <select name="cell_sz" id="cell_sz">
+                <option value="10">small</option>
+                <option value="25">medium</option>
+                <option value="50" selected>large</option>
+            </select>
             <button type="button" id="bt-gen">Générer le laby</button>
         </form>
         <div id="display">

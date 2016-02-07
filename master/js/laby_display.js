@@ -1,61 +1,60 @@
-// affiche un tableau 2D
-function print_2d_array(a) {
+/* fonction d'affichage du labyrinthe en DOM.
+ */
+function print_maze(a, cell_sz) {
+    var container = document.createElement('div');
+    container.setAttribute('id','laby');
+    container.setAttribute('class','maze');
+    container.setAttribute('style',
+        'width:'+parseInt(cell_sz * (parseInt(document.querySelector('#dimX').value) )+cell_sz*4) +
+        'px; height:'+parseInt(cell_sz * (parseInt(document.querySelector('#dimY').value) )+cell_sz*4)+'px;'
+    );
+
+    var cells=[];
     for (var i = 0; i < a.length; i++) {
+        var row = document.createElement('div');
+        row.setAttribute('class','row');
         for (var j = 0; j < a[i].length; j++) {
-            document.write(a[i][j] + " ");
+            var cell = document.createElement('div');
+            cell.setAttribute('id',i+'_'+j);
+            cell.setAttribute('class','cell '+css_cell_code(a[i][j])+ ' '+document.querySelector('#cell_sz').options[document.querySelector('#cell_sz').selectedIndex].text);
+            //cell.setAttribute('style', 'width:'+ 0.8 * cell_sz+'px; height:' + 0.8 * cell_sz + 'px;');
+            //flow += " style='top:" + (cell_sz * i) + "; left:" + (cell_sz * j) + ";";
+            //cell.innerHTML = a[i][j]; // i +'_'+ j +' <b>'+ a[i][j] + '</b>';
+            cell.innerHTML='&nbsp';
+            cells[cells.length]=cell;
+            row.appendChild(cell);
         }
-        document.write("<br/>");
+        container.appendChild(row);
     }
+    document.querySelector('#display').appendChild(container);
+    return cells;
 }
 
 function generate_display(){
-    /*
-     <table id="maze">
-     <tr>
-     <td class="bN bW">&nbsp;</td>
-     <td class="bN bE bS">&nbsp;</td>
-     <td class="bN bW">&nbsp;</td>
-     <td class="bN bS bE">&nbsp;</td>
-     </tr>
-     <tr>
-     <td class="bW bE">&nbsp;</td>
-     <td class="bN bW bS">&nbsp;</td>
-     <td class="bE">&nbsp;</td>
-     <td class="bW bE bN">&nbsp;</td>
-     </tr>
-     <tr>
-     <td class="bW bS">&nbsp;</td>
-     <td class="bN bE">&nbsp;</td>
-     <td class="bE bW">&nbsp;</td>
-     <td class="bW bE">&nbsp;</td>
-     </tr>
-     <tr>
-     <td class="bN bS bW">&nbsp;</td>
-     <td class="bS">&nbsp;</td>
-     <td class="bS">&nbsp;</td>
-     <td class="bS bE">&nbsp;</td>
-     </tr>
-     </table>
-    */
-    var display = document.querySelector('#display');
-    var table = document.createElement('table')
-    table.setAttribute('id','maze');
-    for (var i = 0; i < document.querySelector('#dimX').value; i++){
-        table.insertBefore(document.createElement('tr'), table.firstChild);
-        for (var j = 0; j < document.querySelector('#dimY').value; j++){
-            var td = document.createElement('td');
-            table.firstChild.appendChild(td);
-        }
-    }
-    display.appendChild(table);
+    var a = new_2d_array(
+        parseInt(document.querySelector('#dimX').value),
+        parseInt(document.querySelector('#dimY').value)
+    );
+    var cell_sz = parseInt(document.querySelector('#cell_sz').options[document.querySelector('#cell_sz').selectedIndex].value) || 50;
+    init_2d_array(a, 15);
+    //random_init_maze(a);
+    dig(a, 0, 0);
+    //dig_ES(a);
+
+    print_maze(a, cell_sz);
+    return a;
 }
 
 function main(){
     document.querySelector('#bt-gen').addEventListener('click',function(){
-        //var laby = new_2d_array(5, 10);
-        //laby = 	generate(laby);
-        //print_2d_array(laby);
-        generate_display();
+        document.querySelector('#display').innerHTML = '';
+        var a = generate_display();
+        // premier pas en DOM : marquage de l'entrée et de la sortie :
+        for (var i = 0; i < a.length && has_W_wall(a[i][0]); i++);
+        console.log(document.querySelector('#'+i + "_0"));
+        //.style.backgroundColor = "#99ff33";
+        for (var i = 0; i < a.length && has_E_wall(a[i][a[0].length - 1]); i++);
+        document.querySelector('#'+i + "_" + (a[0].length - 1)).style.backgroundColor = "#ff6666";
     });
 }
 
