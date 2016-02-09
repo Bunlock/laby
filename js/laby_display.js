@@ -1,7 +1,7 @@
 /* fonction d'affichage du labyrinthe en DOM.
  */
 function print_maze(a, cell_sz) {
-    var container = document.createElement('div');
+    var container = document.createElement('table');
     container.setAttribute('id','laby');
     container.setAttribute('class','maze');
     var width, height;
@@ -15,10 +15,10 @@ function print_maze(a, cell_sz) {
     }
     container.setAttribute('style','width:'+width+'px; height:'+height+'px;');
     for (var i = 0; i < a.length; i++) {
-        var row = document.createElement('div');
+        var row = document.createElement('tr');
         row.setAttribute('class','row');
         for (var j = 0; j < a[i].length; j++) {
-            var cell = document.createElement('div');
+            var cell = document.createElement('td');
             cell.setAttribute('id',i+'_'+j);
             cell.setAttribute('class','cell '+css_cell_code(a[i][j]));//+ ' '+document.querySelector('#cell_sz').options[document.querySelector('#cell_sz').selectedIndex].text);
             //cell.setAttribute('style', 'width:'+ 0.8 * cell_sz+'px; height:' + 0.8 * cell_sz + 'px;');
@@ -49,15 +49,14 @@ function generate_display(x,y){
     return a;
 }
 
-function main(){
+function main() {
     pick_generated();
-    if (document.querySelector('#bt-gen')){
-            document.querySelector('#bt-gen').addEventListener('click',function(){
-               document.querySelector('#display').innerHTML = '';
-               generate_display();
-            });
+    if (document.querySelector('#bt-gen')) {
+        document.querySelector('#bt-gen').addEventListener('click', function () {
+            document.querySelector('#display').innerHTML = '';
+            generate_display();
+        });
     }
-
 }
 
 function pick_generated(){

@@ -1,17 +1,19 @@
-div.maze {
+.maze {
+    margin: auto;
+    margin-top: 50px;
     /*position: relative;
     top: 50px;
     width: 300px;
     height: 300px;
     border: 1px solid #ccc;*/
-    margin: auto;
-    border-spacing : 2px;
-    /*border-collapse : collapse*/
+
+    /*border-spacing : 2px;*/
+    border-collapse : collapse;
 }
 
 form{display:inline;}
 .row{display:block;}
-div.cell {
+.cell {
     display:inline-block;
     text-align: center;
     vertical-align: center;
@@ -21,17 +23,17 @@ div.cell {
     border-width: 0.05px;
     border-size: 1px;
     margin: 25px;*/
-    /*padding: 2px;*/
-    border: 2px dotted #eee;
+    padding: 1px;
+    border: 1px dotted #eee;
 
     width:  50px;
     height: 50px;
 }
 
-div.N { border-top: 2px solid; }
-div.E { border-right: 2px solid; }
-div.S { border-bottom: 2px solid; }
-div.W { border-left: 2px solid; }
+.N { border-top: 1px solid; }
+.E { border-right: 1px solid; }
+.S { border-bottom: 1px solid; }
+.W { border-left: 1px solid; }
 
 /*.small {
     width:  30px;
