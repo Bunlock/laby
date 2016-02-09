@@ -1,0 +1,45 @@
+<html>
+<head>
+    <title>Labyrinthe - Back Office</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/laby.css">
+    <script>
+        var maze = <%= maze %>;
+    </script>
+</head>
+<body onload="main(maze)">
+<header>
+    <%- include nav %>
+</header>
+<div class="content">
+    <h1>Bienvenue dans le labyrinthe</h1>
+    <h2>Saurez-vous relever le défi ? ;)</h2>
+    <hr/>
+    <div>
+
+        <form>
+            <label for="dimX">Dimensions X</label><input type="number" class="dim" name="dimX" id="dimX" value="10"/>
+            <label for="dimY">Dimensions Y</label><input type="number" class="dim" name="dimY" id="dimY" value="10"/>
+            <!--label for="cell_sz">Taille des cellules</label>
+            <select name="cell_sz" id="cell_sz">
+                <option value="10">small</option>
+                <option value="25">medium</option>
+                <option value="50" selected>large</option>
+            </select-->
+            <button type="button" id="bt-gen">Générer le laby</button>
+        </form>
+        <div id="display">
+
+        </div>
+    </div>
+</div>
+<footer class="content">
+    <hr/>
+    Créé avec passion pour ESILV 2A ACS
+</footer>
+<script src="js/laby_algo.js"></script>
+<script src="js/laby_display.js"></script>
+
+</body>
+</html>

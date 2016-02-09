@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign up</title>
+    <link rel='stylesheet' href='/css/style.css' />
+</head>
+<body>
+<form action="/signup" method="POST">
+    <label>Login</label><input name="username" type="text"/>
+    <label>Password</label><input id="password" name="password" type="password"/>
+    <div id="error">Les mots de passe ne sont pas identique</div>
+    <label>Repeat password</label><input id="repeat-password" name="repeat-password" type="password"/>
+    <button type="submit">Go</button>
+</form>
+<script>
+    function check_pswd() {
+        if (document.querySelector('#password').value != document.querySelector('#repeat-password').value) {
+            document.querySelector('#error').setAttribute('style', 'visibility:visible;');
+        } else document.querySelector('#error').setAttribute('style', 'visibility:hidden;');
+    }
+
+    document.querySelector('form').addEventListener('change',check_pswd);
+
+</script>
+</body>
+</html>

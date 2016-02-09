@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>Labyrinthe</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/laby.css">
+    <script>
+        var maze = <%= maze %>;
+    </script>
+</head>
+<body onload="main(maze);">
+<header>
+    <%- include nav %>
+</header>
+<div class="content">
+    <h1>Bienvenue dans le labyrinthe</h1>
+    <h2>Saurez vous relever le défi ? ;)</h2>
+    <hr/>
+    <div id="display"></div>
+</div>
+<footer class="content">
+    <hr/>
+    Créé avec passion pour ESILV 2A ACS
+</footer>
+<script src="js/laby_algo.js"></script>
+<script src="js/laby_display.js"></script>
+
+</body>
+</html>
